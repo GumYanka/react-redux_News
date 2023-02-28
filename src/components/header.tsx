@@ -1,114 +1,43 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-  makeStyles,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import HomeIcon from "@material-ui/icons/Home";
-import WorkIcon from "@material-ui/icons/Work";
-import InfoIcon from "@material-ui/icons/Info";
-import News from "@/pages/news";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  icon: {
-    marginRight: theme.spacing(1),
-  },
-}));
+import { useAppSelector } from "../hooks/redux-hooks";
+import React from "react";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/user-slice";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const currentUser = useAppSelector((state) => state.users.currentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleMenu = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login')
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            My App
-          </Typography>
-          <div className="flex flex-row items-center space-x-3">
-            <nav>
-              <ul className="flex flex-row space-x-5 items-center">
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/news">News</Link>
-                </li>
-                <li>
-                  <Link to="/auth/login">Login</Link>
-                </li>
-              </ul>
-            </nav>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={handleMenu}
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-        </Toolbar>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={open}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <Link to="/auth/profile">Profile</Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <WorkIcon />
-            </ListItemIcon>
-            <Link to="/auth/profile">Logout</Link>
-          </MenuItem>
-        </Menu>
-      </AppBar>
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6">
+          <Button onClick={() => console.error("/")}>News</Button>
+        </Typography>
+        <Link to={`/profile`} className="button muted-button">
+          Profile
+        </Link>
+        <Link to={`/news`} className="button muted-button">
+          News
+        </Link>
+        <Link to={`/login`} className="button muted-button">
+          Login
+        </Link>
+        {currentUser && (
+          <>
+            <Button onClick={handleLogout}>Logout</Button>
+            <p>{currentUser.username}</p>
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 
@@ -142,25 +71,25 @@ export default Header;
 //   const router = useRouter();
 //   const classes = useStyles();
 
-//   return (
-//     <AppBar position="static" className={classes.appBar}>
-//       <Toolbar>
-//         <Typography variant="h6" className={classes.title}>
-//           <Button
-//             className={classes.button}
-//             onClick={() => router.push("/")}
-//           >
-//             News
-//           </Button>
-//         </Typography>
-//         <Button className={classes.button} onClick={() => router.push("/home")}>
-//           Home
+// return (
+//   <AppBar position="static" className={classes.appBar}>
+//     <Toolbar>
+//       <Typography variant="h6" className={classes.title}>
+//         <Button
+//           className={classes.button}
+//           onClick={() => router.push("/")}
+//         >
+//           News
 //         </Button>
-//         <Button className={classes.button}>About</Button>
-//         <Button className={classes.button}>Contact</Button>
-//       </Toolbar>
-//     </AppBar>
-//   );
+//       </Typography>
+//       <Button className={classes.button} onClick={() => router.push("/home")}>
+//         Home
+//       </Button>
+//       <Button className={classes.button}>About</Button>
+//       <Button className={classes.button}>Contact</Button>
+//     </Toolbar>
+//   </AppBar>
+// );
 // }
 
 // export default Header;

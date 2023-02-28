@@ -1,17 +1,19 @@
-import { 
-  TypedUseSelectorHook, 
-  useSelector 
-} from "react-redux";
-import { configureStore } from '@reduxjs/toolkit'
-import rootReducer  from '../reducers/basicReducer'
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import newsReducer from "./news-slice";
+import { userReducer } from "./user-slice";
+import thunkMiddleware from "redux-thunk";
 
-export const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
+const rootReducer = combineReducers({
+  news: newsReducer,
+  users: userReducer,
+});
 
-export const store = configureStore({
-  reducer: {
-    reducer: rootReducer,
-  },
-})
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: [thunkMiddleware],
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;
+
+export default store;

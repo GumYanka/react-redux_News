@@ -1,18 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider } from "@material-ui/core/styles";
-import App from "./App";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
-import { store } from "./store/store";
-import red from "@material-ui/core/colors/red";
-import { createMuiTheme } from "@material-ui/core/styles";
+import store from "./store/store";
+import App from "./App";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: "#fdfdfd",
     },
     secondary: {
       main: "#19857b",
@@ -20,20 +18,17 @@ const theme = createMuiTheme({
     error: {
       main: red.A400,
     },
-    background: {
-      default: "#fff",
-    },
   },
 });
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
       <Router>
         <App />
       </Router>
-    </ThemeProvider>
-  </Provider>,
-  document.querySelector("#root")
+    </Provider>
+  </ThemeProvider>,
+
+  document.getElementById("root")
 );

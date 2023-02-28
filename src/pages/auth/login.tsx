@@ -1,36 +1,47 @@
-import { login } from "../../interfaces/authService";
-import { useState, FormEvent } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/user-slice";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    const user = login(email, password);
-    if (user) {
-    } else {
-      console.log("Error");
-    }
+    dispatch(login(formData));
+    navigate("/profile");
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input value={email} onChange={(e) => setEmail(e.target.value)} />
-      </label>
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        name="username"
+        value={formData.username}
+        onChange={handleChange}
+      />
+
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+      />
+
       <button type="submit">Login</button>
     </form>
   );
 };
 
-export default Login;
+export default LoginForm;

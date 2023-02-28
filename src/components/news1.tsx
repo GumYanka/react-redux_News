@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { postAPI, putAPI } from "../interfaces/service";
-import { NewsPayload } from "../interfaces/interface";
+import { postAPI, putAPI } from "../service/news-service";
+import { NewsPayload } from "../models/redux-model";
 import Modal from "@material-ui/core/Modal";
 import CachedIcon from "@mui/icons-material/Cached";
 
@@ -31,7 +31,7 @@ const News: React.FC<INews> = (props) => {
   const handleClose = () => {
     setIsOpen(false);
     setValue("");
-    setEditObj({ userId: 0, title: "", body: "", id: 0 });
+    setEditObj({ userId: 0, title: "", body: "", id: "" });
   };
 
   const putRequest = async () => {

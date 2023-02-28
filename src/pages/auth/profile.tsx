@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
 
 const Profile = () => {
-  const [currentUser, setCurrentUser] = useState<any>({});
+  // const [currentUser, setCurrentUser] = useState<any>({});
 
-  useEffect(() => {
-    // const currentUser = JSON.parse(localStorage.getItem("user"));
-    setCurrentUser(currentUser);
-  }, []);
+  // useEffect(() => {
+  //   // const currentUser = JSON.parse(localStorage.getItem("user"));
+  //   setCurrentUser(currentUser);
+  // }, []);
 
-  const logout = () => {
-    localStorage.removeItem("user");
-  };
+  // const logout = () => {
+  //   localStorage.removeItem("user");
+  // };
 
   return (
     <>
       <div>
         <>
-          <h2>Welcome, {currentUser.username}!</h2>
-          <button onClick={logout}>Logout</button>
+          <h2>Welcome</h2>
         </>
       </div>
     </>

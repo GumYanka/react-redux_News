@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getNewsAPI, deleteNewsAPI } from "../interfaces/service";
-import { NewsPayload } from "../interfaces/interface";
+import { getNewsAPI, deleteNewsAPI } from "../service/news-service";
+import { NewsPayload } from "../models/redux-model";
 import { Button } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CachedIcon from "@mui/icons-material/Cached";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import { useAppDispatch } from "@/hooks/redux-hooks";
+import { fetchNews } from "@/store/news-actions";
 
 type IProps = {
   setIsOpen: (isOpen: boolean) => void;
@@ -17,7 +19,7 @@ const NewsList: React.FC<IProps> = (props) => {
   const { setIsOpen, setEditObj, newsList, setNewsList } = props;
   const [loader, setLoader] = useState<boolean>(false);
   const [editId, setEditId] = useState<number>(0);
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     getData();
   }, []);
@@ -58,8 +60,8 @@ const NewsList: React.FC<IProps> = (props) => {
   // GET News list
   const getData = async () => {
     try {
-      const response = await getNewsAPI();
-      setNewsList(response.data);
+      const response:any = dispatch(fetchNews());
+      setNewsList(response);
     } catch (error) {
       console.log({ msg: "Something went wrong", color: "danger" });
     }
