@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.05cdabd8.css",
+    "main.js": "/static/js/main.ecdf1a5a.js",
+    "static/media/Montserrat-Regular.ttf": "/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
+    "index.html": "/index.html",
+    "main.05cdabd8.css.map": "/static/css/main.05cdabd8.css.map",
+    "main.ecdf1a5a.js.map": "/static/js/main.ecdf1a5a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.05cdabd8.css",
+    "static/js/main.ecdf1a5a.js"
+  ]
+}
