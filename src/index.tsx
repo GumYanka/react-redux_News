@@ -1,34 +1,37 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import "./styles/index.css";
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import store from "./store/store";
 import App from "./App";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
+import { I18nextProvider } from "react-i18next";
+
+import i18n from "./localization/i18n";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#fdfdfd",
-    },
-    secondary: {
-      main: "#19857b",
-    },
-    error: {
-      main: red.A400,
+      light: "#757ce8",
+      main: "#3f51b5",
+      dark: "#002884",
+      contrastText: "#fff",
     },
   },
 });
 
-ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
-  </ThemeProvider>,
-
-  document.getElementById("root")
-);
+const root = document.getElementById("root");
+if (root) {
+  ReactDOM.createRoot(root).render(
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <I18nextProvider i18n={i18n}>
+          <Router>
+            <App />
+          </Router>
+        </I18nextProvider>
+      </Provider>
+    </ThemeProvider>
+  );
+}

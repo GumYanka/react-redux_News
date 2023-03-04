@@ -1,71 +1,96 @@
-import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { fetchNews } from "../store/news-actions";
-import { useEffect, useState } from "react";
-import { RootState } from "@/store/store";
+import { fetchNewsById, fetchPhotoById } from "../services/services";
+import React, { useEffect } from "react";
+import { styled } from "@mui/material/styles";
+import { useAppDispatch } from "../hooks/redux-hooks";
+import { selectNewsById } from "../store/news-slice";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectPhotosById } from "../store/photos-slice";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const News = () => {
-  // const [news_id, setNews_id] = useState("");
-  const [click, setClick] = useState(false);
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean;
+}
+
+const ExpandMore = styled((props: ExpandMoreProps) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+const NewsDetails = () => {
+  const [expanded, setExpanded] = React.useState(false);
+  const { id } = useParams<{ id: string }>() as any;
+  const newsId = parseInt(id);
   const dispatch = useAppDispatch();
-  const allNews = useAppSelector((state: RootState) => state.news);
-  // const particularNews = useAppSelector(
-  //   (state: { news: any }) => state.news.particular_news
-  // );
-  const clickHandler = () => {
-    dispatch(fetchNews());
-    setClick(true);
+  const news = useSelector(selectNewsById(newsId));
+  const photo = useSelector(selectPhotosById(newsId));
+
+  useEffect(() => {
+    dispatch(fetchNewsById(newsId));
+    dispatch(fetchPhotoById(newsId));
+  }, [dispatch, newsId]);
+
+  const item = { ...news, ...photo };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
   };
-
-  // useEffect(() => {
-  //   dispatch(fetchNews());
-  // }, []);
-
-  // const searchHandler = (news_id: string) => {
-  //   dispatch(fetchParticularNews(news_id));
-  // };
-
-  // const checkNews = (): boolean => {
-  //   if (click && allNews.length === 0) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
 
   return (
     <>
-      {/* <div>
-        <label>Enter the todo id : </label>
-        <input
-          onChange={(event) => {
-            setNews_id(event.target.value);
-          }}
-          type="number"
-        ></input>
-        <button onClick={() => searchHandler(news_id)}> Find </button>
-        <div>
-          <h3>Particular TODO </h3>
-          {checkParticularNews() && (
-            <div className="todo-container" key={particularNews.id}>
-              <p className="todo-child1">{particularNews.id}</p>
-              <p className="todo-child2">{particularNews.userId}</p>
-              <p className="todo-child3">{particularNews.title}</p>
-              <p className="todo-child4">{particularNews.completed}</p>
-            </div>
-          )}
+      <div className="flex">
+        <div className="flex-col">
+          <Card sx={{ maxWidth: 285 }} key={item.id}>
+            <IconButton aria-label="more info">
+              <Link to={`/all-news`}>
+                <ArrowBackIcon />
+              </Link>
+            </IconButton>
+            <CardContent>
+              <Typography
+                className="font-['Montserrat']"
+                variant="body2"
+                color="text.secondary"
+              >
+                {item.title}
+              </Typography>
+              <div>{item.url && <img src={item.url} alt={item.title} />}</div>
+            </CardContent>
+            <CardActions disableSpacing>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </CardActions>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography className="font-['Montserrat']" paragraph>
+                  {item.body}
+                </Typography>
+              </CardContent>
+            </Collapse>
+          </Card>
         </div>
-      </div> */}
-      <div>
-        <button onClick={clickHandler}>All News</button>
-
-        {/* {allNews.map((news: NewsPayload) => (
-            <div key={news.id}>
-              <p>{news.body}</p>
-              <p>{news.userId}</p>
-              <p>{news.title}</p>
-            </div>
-          ))} */}
       </div>
     </>
   );
 };
-export default News;
+
+export default NewsDetails;

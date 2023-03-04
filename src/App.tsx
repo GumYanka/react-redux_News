@@ -1,12 +1,24 @@
-import React from "react";
-import Header from "./components/header";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Loyout from "./components/loyout";
 import AppRoutes from "./routes";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.externalLink) {
+      window.open(location.pathname, "_blank");
+    }
+  }, [location]);
+
   return (
     <>
-      <Header />
-      <AppRoutes />
+      <Loyout>
+        <AppRoutes />
+        <Toaster />
+      </Loyout>
     </>
   );
 };

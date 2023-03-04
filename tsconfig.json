@@ -2,9 +2,11 @@
     "compilerOptions": {
         "target": "es5",
         "lib": [
-            "dom",
             "dom.iterable",
-            "esnext"
+            "esnext",
+            "es6",
+            "dom",
+            "es2017"
         ],
         "allowJs": true,
         "skipLibCheck": true,
@@ -28,8 +30,9 @@
     "include": [
         "next-env.d.ts",
         "**/*.ts",
-        "**/*.tsx"
-, "src/components/news.jsx"    ],
+        "**/*.tsx",
+        "src/components/news.jsx"
+    ],
     "exclude": [
         "node_modules"
     ]

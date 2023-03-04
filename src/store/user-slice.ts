@@ -1,28 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const usersSlice = createSlice({
-  name: "users",
-  initialState: {
-    currentUser: null,
-    users: [{ id: 1, username: "admin", password: "12345" }],
-  },
+const initialState = {
+  user: null,
+  users: [{ id: 1, username: "admin", password: "12345" }],
+};
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
   reducers: {
     login: (state, action) => {
       const { username, password } = action.payload;
       const user = state.users.find(
-        (user) => user.username === username && user.password === password
+        (user: any) => user.username === username && user.password === password
       );
       if (user) {
         localStorage.setItem("currentUser", JSON.stringify(user));
-        state.currentUser = user as any;
+        state.user = user as any;
       }
     },
-    logout: (state) => {
+    logOut: (state) => {
       localStorage.removeItem("currentUser");
-      state.currentUser = null;
+      state.user = null;
     },
   },
 });
 
-export const { login, logout } = usersSlice.actions;
-export const userReducer = usersSlice.reducer;
+export const { login, logOut } = userSlice.actions;
+
+export const selectCurrentUser = (state:any) => state.user.user;
+
+export const userReducer = userSlice.reducer;
