@@ -51,7 +51,7 @@ const NewsList = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col">
-        <div className="grid grid-cols-3 gap-6 grid-flow-row auto-cols-min mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-flow-row auto-cols-min mt-12">
           {combinedArray?.map((item: any) => {
             return (
               <Card className="flex" sx={{ maxWidth: 345 }} key={item.id}>

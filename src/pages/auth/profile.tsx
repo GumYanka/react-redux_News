@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(4),
     margin: "auto",
-    minWidth: 500,
   },
   title: {
     marginBottom: theme.spacing(2),
@@ -42,7 +41,7 @@ const Profile = () => {
 
   return (
     <Paper className={classes.paper}>
-      <div className="flex flex-col text-center">
+      <div className="flex flex-col text-center md:min-w-[300px] lg:min-w-[500px]">
         <div className="flex flex-row justify-center mb-3">
           <AccountBoxIcon fontSize="large" />
         </div>

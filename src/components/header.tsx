@@ -9,9 +9,9 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
+  Button,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import PersonIcon from "@mui/icons-material/Person";
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
 import { logOut, selectCurrentUser } from "../store/user-slice";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -20,6 +20,12 @@ import { useTranslation } from "react-i18next";
 import { fetchCurrentUser } from "../services/services";
 import toast from "react-hot-toast";
 import FiberNewIcon from "@mui/icons-material/FiberNew";
+import MenuIcon from "@material-ui/icons/Menu";
+import { useMediaQuery } from "@material-ui/core";
+import HomeIcon from "@mui/icons-material/Home";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonIcon from "@mui/icons-material/Person";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -39,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "none",
     borderBottom: `1px solid ${theme.palette.divider}`,
     display: "flex",
-    padding: theme.spacing(1, 2),
+    padding: theme.spacing(1, 1),
     height: 64,
     [theme.breakpoints.up("sm")]: {
       height: 70,
@@ -72,14 +78,23 @@ const Header = () => {
   const { t } = useTranslation();
 
   const currentUser = useAppSelector(selectCurrentUser);
+  const [openMenu, setOpenMenu] = React.useState(null);
+  const isMobile = useMediaQuery("(max-width:600px)");
+
+  const handleClickMenu = (event: any) => {
+    setOpenMenu(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setOpenMenu(null);
+  };
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
   const handleMenu = (event: React.FormEvent<HTMLFormElement | any>) => {
-    const data = new FormData(event.currentTarget);
-    setAnchorEl(data);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -100,40 +115,99 @@ const Header = () => {
             <FiberNewIcon fontSize="large" />
             {t("logo")}
           </Typography>
+          {isMobile && (
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClickMenu}
+            >
+              <MenuIcon />
+            </Button>
+          )}
         </div>
         <div className="flex">
           <div className="flex flex-row items-center space-x-3">
             <nav className={classes.links}>
-              <ul className="flex flex-row space-x-5 items-center">
-                <li>
-                  <Link className={classes.link} to="/news">
-                    {t("home")}
-                  </Link>
-                </li>
-                {currentUser && (
+              {!isMobile && (
+                <ul className="flex flex-row space-x-5 items-center">
                   <li>
-                    <Link className={classes.link} to="/all-news">
-                      {t("news")}
+                    <Link className={classes.link} to="/news">
+                      {t("home")}
                     </Link>
                   </li>
+                  {currentUser && (
+                    <li>
+                      <Link className={classes.link} to="/all-news">
+                        {t("news")}
+                      </Link>
+                    </li>
+                  )}
+                  {!currentUser && (
+                    <li>
+                      <Link className={classes.link} to="/login">
+                        {t("login")}
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser && (
+                    <li>
+                      <Link className={classes.link} to="/profile">
+                        {t("profile")}
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+              )}
+              <LanguageSelector />
+            </nav>
+            {isMobile && (
+              <Menu
+                id="simple-menu"
+                anchorEl={openMenu}
+                keepMounted
+                open={Boolean(openMenu)}
+                onClose={handleCloseMenu}
+              >
+                <MenuItem onClick={handleCloseMenu}>
+                  <ListItemIcon className="flex content-start space-x-2 mx-3 items-center">
+                    <HomeIcon fontSize="small" />
+                    <Link className={classes.link} to="/news">
+                      {t("home")}
+                    </Link>
+                  </ListItemIcon>
+                </MenuItem>
+                {currentUser && (
+                  <MenuItem onClick={handleCloseMenu}>
+                    <ListItemIcon className="flex content-start space-x-2 mx-3 items-center">
+                      <NewspaperIcon fontSize="small" />
+                      <Link className={classes.link} to="/all-news">
+                        {t("news")}
+                      </Link>
+                    </ListItemIcon>
+                  </MenuItem>
                 )}
                 {!currentUser && (
-                  <li>
-                    <Link className={classes.link} to="/login">
-                      {t("login")}
-                    </Link>
-                  </li>
+                  <MenuItem onClick={handleCloseMenu}>
+                    <ListItemIcon className="flex content-start space-x-2 mx-3 items-center">
+                      <LoginIcon fontSize="small" />
+                      <Link className={classes.link} to="/login">
+                        {t("login")}
+                      </Link>
+                    </ListItemIcon>
+                  </MenuItem>
                 )}
                 {currentUser && (
-                  <li>
-                    <Link className={classes.link} to="/profile">
-                      {t("profile")}
-                    </Link>
-                  </li>
+                  <MenuItem onClick={handleCloseMenu}>
+                    <ListItemIcon className="flex content-start space-x-2 mx-3 items-center">
+                      <PersonIcon fontSize="small" />
+                      <Link className={classes.link} to="/profile">
+                        {t("profile")}
+                      </Link>
+                    </ListItemIcon>
+                  </MenuItem>
                 )}
-                <LanguageSelector />
-              </ul>
-            </nav>
+              </Menu>
+            )}
             <IconButton
               edge="start"
               className={classes.menuButton}
