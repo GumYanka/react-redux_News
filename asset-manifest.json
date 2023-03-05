@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/react-redux_News/static/css/main.0c4ba1c8.css",
-    "main.js": "/react-redux_News/static/js/main.ecdf1a5a.js",
+    "main.css": "/react-redux_News/static/css/main.e1ebb044.css",
+    "main.js": "/react-redux_News/static/js/main.07e7635b.js",
     "static/media/Montserrat-Regular.ttf": "/react-redux_News/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
     "index.html": "/react-redux_News/index.html",
-    "main.0c4ba1c8.css.map": "/react-redux_News/static/css/main.0c4ba1c8.css.map",
-    "main.ecdf1a5a.js.map": "/react-redux_News/static/js/main.ecdf1a5a.js.map"
+    "main.e1ebb044.css.map": "/react-redux_News/static/css/main.e1ebb044.css.map",
+    "main.07e7635b.js.map": "/react-redux_News/static/js/main.07e7635b.js.map"
   },
   "entrypoints": [
-    "static/css/main.0c4ba1c8.css",
-    "static/js/main.ecdf1a5a.js"
+    "static/css/main.e1ebb044.css",
+    "static/js/main.07e7635b.js"
   ]
 }
