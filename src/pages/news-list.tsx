@@ -7,7 +7,12 @@ import {
   fetchPhotosAsync,
 } from "../services/services";
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { selectNews, selectPage, loadMoreNews } from "../store/news-slice";
+import {
+  selectNews,
+  selectPage,
+  loadMoreNews,
+  selectNewsStatus,
+} from "../store/news-slice";
 import { loadMorePhotos, selectPhotos } from "../store/photos-slice";
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider, Typography } from "@material-ui/core";
@@ -16,6 +21,7 @@ import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import { useTranslation } from "react-i18next";
+import Loader from "../components/loader";
 
 const theme = createTheme();
 
@@ -25,6 +31,7 @@ const NewsList = () => {
   const news = useAppSelector(selectNews);
   const page = useAppSelector(selectPage);
   const pagePhotos = useAppSelector(selectPage);
+  const status = useAppSelector(selectNewsStatus);
   const { t } = useTranslation();
 
   React.useEffect(() => {
@@ -47,6 +54,16 @@ const NewsList = () => {
   const handleDeleteClick = (id: number) => {
     dispatch(deleteNewsAsync(id));
   };
+
+  if (status === "loading" && combinedArray.length < 10) {
+    return <Loader />;
+  }
+
+  if (page === 11 && pagePhotos === 11) {
+    return (
+      <Typography className="font-['Montserrat']">{t("news-end")}</Typography>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -49,7 +49,7 @@ const HomePage = () => {
       <div className="flex flex-col text-center">
         <Container maxWidth="md">
           <Typography
-            variant="h2"
+            variant="h3"
             component="h1"
             align="center"
             className={classes.title}

@@ -1,3 +1,48 @@
+### Project
+
+This project is a React application that uses Redux Toolkit to fetch data from the JSONPlaceholder API
+and display posts and photos. It also features a login form that uses local storage to store user 
+credentials, and uses React Hook Form for form validation. The project is styled with Tailwind CSS and 
+Material UI, and supports internationalization with i18next. Additionally, it uses react-hot-toast to 
+display success and error messages.
+
+### Features
+
+- Fetches and displays posts and photos data from JSONPlaceholder API
+- Allows deleting existing posts
+- Includes pagination for posts
+- Allows deleting existing photos
+- Includes pagination for photos
+- User authentication with a hardcoded user account
+- Ability to persist login credentials using localStorage
+- Loading spinner when data is being fetched
+- Error message display when there is a problem with authentication
+- Success message display when there not problem with authentication
+- Internationalization with i18next
+
+### Usage
+Once the development server is running, open a web browser and navigate to http://localhost:3000. 
+The home page will display a list of posts and photos retrieved from the JSONPlaceholder API. 
+Clicking on a news will take you to a detailed view of that news.
+
+To access the login form, click the "Login" button in the navigation bar. The form requires 
+a valid username and password to submit. If the form is submitted with valid credentials, 
+the user will be redirected to the profile page and a success message will be displayed.
+If the form is submitted with invalid credentials, an error message will be displayed.
+
+### Technologies
+
+- React
+- Type script
+- Redux Toolkit
+- React Router DOM
+- react-hook-form
+- Axios
+- Tailwind CSS
+- Material Ui
+- i18next
+- react-hot-toast
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -14,11 +59,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `yarn build`
 
 Builds the app for production to the `build` folder.\
@@ -28,43 +68,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

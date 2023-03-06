@@ -9,6 +9,7 @@ export type NewsPayload= {
 
 export interface NewsArray {
   news: NewsPayload[];
+  status: 'loading' | 'succeeded';
 }
 
 export interface Photo {

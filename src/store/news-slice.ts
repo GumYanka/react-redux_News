@@ -5,6 +5,7 @@ const initialState = {
   news: [],
   selectedNewsId: null,
   page: 1,
+  status: "loading"
 } as NewsArray;
 
 export const newsSlice: any = createSlice({
@@ -12,13 +13,15 @@ export const newsSlice: any = createSlice({
   initialState,
   reducers: {
     setNews: (state: NewsArray[]| any, action:PayloadAction<updateFieldObject>) => {
-      state.news= action.payload;
+      state.news = action.payload;
+      state.status = 'succeeded';
     },
     selectNews(state: NewsArray | any, action: PayloadAction<number>) {
       state.selectedNewsId = action.payload;
     },
     loadMoreNews: (state:any) => {
       state.page += 1;
+      state.status = 'succeeded';
     },
     deleteNews: (state: NewsArray| any, action: PayloadAction<number>) => {
       state.news = state.news.filter((news:any) => news.id !== action.payload);
@@ -32,6 +35,6 @@ export const selectNewsById = (newsId:number) => createSelector(
   selectNews,
   news => news.find((news:any) => news.id === newsId)
 );
-
+export const selectNewsStatus = (state: any) => state.news.status;
 export const { setNews, selectedNews,loadMoreNews,deleteNews } = newsSlice.actions;
 export default newsSlice.reducer;
